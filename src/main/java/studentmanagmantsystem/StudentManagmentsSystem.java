@@ -50,7 +50,7 @@ public class StudentManagmentsSystem {
            readFile.close(); } 
         } 
                 catch (Exception e) {
-                    // TODO: handle exception
+                    System.out.println("file does not exist ");
                 }
 
         while (true) {
