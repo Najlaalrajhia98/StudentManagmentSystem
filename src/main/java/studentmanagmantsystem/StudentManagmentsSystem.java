@@ -87,7 +87,7 @@ public class StudentManagmentsSystem {
                 String[] student = store.get(id);
                 if (student!=null){
                     System.out.println("Student info");
-                    System.out.println("id"+ id);
+                    System.out.println("id : "+ id);
                     System.out.println("name: " + student[0]);
                     System.out.println("email: " + student[1]);
 
