@@ -7,6 +7,7 @@ import java.awt.Choice;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.security.PublicKey;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,10 +33,10 @@ public class StudentManagmentsSystem {
 
         HashMap<Integer , String []> store= new HashMap<>();
         Scanner inputScanner = new Scanner(System.in); 
-        
+
         final String DATA_FILE_PATH="studentdata/studentt.csv";
         File dataFile = new File(DATA_FILE_PATH);
-     // Load student records from CSV file to the hashmap
+        // Load student records from CSV file to the hashmap
         try {
 
             if (dataFile.exists()) {
@@ -47,16 +48,17 @@ public class StudentManagmentsSystem {
                     int id = Integer.parseInt(data[0]);
                     store.put(id, new String[] { data[1], data[2] });
                 }
-           readFile.close(); } 
+                readFile.close(); } 
         } 
-                catch (Exception e) {
-                    System.out.println("file does not exist ");
-                }
+        catch (Exception e) {
+            System.out.println("file does not exist ");
+        }
 
         while (true) {
             System.out.println("1. Register a student");
             System.out.println("2. Search for a student");
             System.out.println("3. retain all students");
+            System.out.println("4. delete a student ");
             System.out.print("Enter a choice: ");
             int choice = inputScanner.nextInt();
 
@@ -91,20 +93,47 @@ public class StudentManagmentsSystem {
                     System.out.println("name: " + student[0]);
                     System.out.println("email: " + student[1]);
 
-                    
+
                 } else {
                     System.out.println("student not found");
                 }
 
             }
             else if (choice==3) {
-               
-                        for (Map.Entry<Integer, String[]> entry : store.entrySet()) {
-                            System.out.println("ID"+" : "+entry.getKey() +"|" +" NAME AND EMAIL : " + Arrays.toString(entry.getValue()));
-                        }
-                      
 
+                for (Map.Entry<Integer, String[]> entry : store.entrySet()) {
+                    System.out.println("ID"+" : "+entry.getKey() +"|" +" NAME AND EMAIL : " + Arrays.toString(entry.getValue()));
+                }
+
+
+            }
+            else if (choice==4) {
+                Scanner scanner = new Scanner(System.in);
+                System.out.print("Enter student ID that you want to remove : ");
+                int id = scanner.nextInt();
+
+                // Check if student ID exists in the HashMap
+                if (store.containsKey(id)) {
+                    // Remove student record from HashMap
+                    store.remove(id);
+                    try (FileWriter writer= new FileWriter(DATA_FILE_PATH)) {
+                   
+                    for (Integer studentId : store.keySet()) {
+                        String[] record = store.get(studentId);
+                        String name = record[0];
+                       String email= record[1];
+                       writer.write(studentId+","+name+","+email+","+"\n");
+                       
                     }
+                    
+                    }
+                    catch (IOException e) {
+                        e.printStackTrace();
+                      }
+                    }
+
+                
+        
 
             else {
                 System.out.println("Invalid choice");
@@ -113,6 +142,8 @@ public class StudentManagmentsSystem {
         }
     }
 }
+}
+
 
 
 
