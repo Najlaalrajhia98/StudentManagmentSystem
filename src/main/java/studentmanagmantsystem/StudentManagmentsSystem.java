@@ -83,7 +83,7 @@ public class StudentManagmentsSystem {
                     e.printStackTrace();
                 }
 
-            } // 
+            } // Search a student
             else if (choice==2) {
                 System.out.print("Enter the student's ID: ");
                 int id = inputScanner.nextInt();
