@@ -36,7 +36,7 @@ public class StudentManagmentsSystem {
 
         final String DATA_FILE_PATH="studentdata/studentt.csv";
         File dataFile = new File(DATA_FILE_PATH);
-        // Load student records from CSV file to the hashmap
+        // Load student records from csv file to the hashmap
         try {
 
             if (dataFile.exists()) {
@@ -83,7 +83,8 @@ public class StudentManagmentsSystem {
                     e.printStackTrace();
                 }
 
-            } else if (choice==2) {
+            } // 
+            else if (choice==2) {
                 System.out.print("Enter the student's ID: ");
                 int id = inputScanner.nextInt();
                 String[] student = store.get(id);
@@ -99,6 +100,7 @@ public class StudentManagmentsSystem {
                 }
 
             }
+            // Retain records
             else if (choice==3) {
 
                 for (Map.Entry<Integer, String[]> entry : store.entrySet()) {
@@ -107,6 +109,7 @@ public class StudentManagmentsSystem {
 
 
             }
+            // Delete a student 
             else if (choice==4) {
                 Scanner scanner = new Scanner(System.in);
                 System.out.print("Enter student ID that you want to remove : ");
@@ -117,31 +120,28 @@ public class StudentManagmentsSystem {
                     // Remove student record from HashMap
                     store.remove(id);
                     try (FileWriter writer= new FileWriter(DATA_FILE_PATH)) {
-                   
-                    for (Integer studentId : store.keySet()) {
-                        String[] record = store.get(studentId);
-                        String name = record[0];
-                       String email= record[1];
-                       writer.write(studentId+","+name+","+email+","+"\n");
-                       
-                    }
-                    
+
+                        for (Integer studentId : store.keySet()) {
+                            String[] record = store.get(studentId);
+                            String name = record[0];
+                            String email= record[1];
+                            writer.write(studentId+","+name+","+email+","+"\n");
+
+                        }
+
                     }
                     catch (IOException e) {
                         e.printStackTrace();
-                      }
                     }
+                }
 
-                
-        
+                else {
+                    System.out.println("Invalid choice");
+                }
 
-            else {
-                System.out.println("Invalid choice");
             }
-
         }
     }
-}
 }
 
 
