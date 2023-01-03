@@ -57,8 +57,11 @@ public class StudentManagmentsSystem {
         while (true) {
             System.out.println("1. Register a student");
             System.out.println("2. Search for a student");
-            System.out.println("3. retain all students");
-            System.out.println("4. delete a student ");
+            System.out.println("3. list all students");
+            System.out.println("4. Delete a student ");
+            System.out.println("5. Update a student ");
+            System.out.println("6.Exit");
+
             System.out.print("Enter a choice: ");
             int choice = inputScanner.nextInt();
 
@@ -133,16 +136,49 @@ public class StudentManagmentsSystem {
                     catch (IOException e) {
                         e.printStackTrace();
                     }
-                }
 
-                else {
-                    System.out.println("Invalid choice");
                 }
-
             }
+            else if (choice==5) {
+
+                System.out.print("Enter student ID: ");
+                int id = inputScanner.nextInt();
+                if (store.containsKey(id)) {
+                    System.out.print("Enter student name: ");
+                    String name = inputScanner.next();
+                    System.out.print("Enter student email: ");
+                    String email = inputScanner.next();
+                    store.put(id, new String[] {name, email});
+
+                    try (FileWriter writer= new FileWriter(DATA_FILE_PATH)) {
+
+                        for (Integer studentId : store.keySet()) {
+                            String[] record = store.get(studentId);
+                            String nameString = record[0];
+                            String emailsString= record[1];
+                            writer.write(studentId+","+nameString+","+emailsString+","+"\n");
+                        }  
+                        System.out.println("Student record updated."); 
+                    }
+
+                }
+                else {
+                    System.out.println("Student not found.");
+                }
+            }
+            else if (choice==6) {
+                System.exit(0);
+            }
+
+
+            else {
+                System.out.println("Invalid choice");
+            }
+
         }
     }
 }
+
 
 
 
